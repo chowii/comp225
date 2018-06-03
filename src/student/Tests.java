@@ -13,14 +13,14 @@ public class Tests {
 
 	// replace the following with your own directories + files
 	/*
-	String SAMPLE_10_TWEET_CSV_FILE_PATH = "/home/madras/teaching/18comp225/ass/data/training-10.csv";
+	String SAMPLE_CSV_FILE_PATH = "/home/madras/teaching/18comp225/ass/data/training-10.csv";
 	String BASIC_SENT_FILE_PATH = "/home/madras/teaching/18comp225/ass/data/basic-sent-words.txt";
 	String INV_INDEX_FILE_PATH = "/home/madras/teaching/18comp225/ass/data/inv-index-50.txt";
 	String FINEGRAINED_SENT_FILE_PATH = "/home/madras/teaching/18comp225/ass/data/finegrained-sent-words.txt";
 	*/
 
 	private static String path = "src/student/res/data/";
-	static String SAMPLE_10_TWEET_CSV_FILE_PATH = path + "training-10.csv";
+	static String SAMPLE_CSV_FILE_PATH = path + "training-10.csv";
 	static String SAMPLE_40_CSV_FILE_PATH = path + "training-40.csv";
 	static String BASIC_SENT_FILE_PATH = path + "basic-sent-words.txt";
 	static String INV_INDEX_FILE_PATH = path + "inv-index-40.txt";
@@ -33,7 +33,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 		}
 		catch (IOException e) {
 			System.out.println("in exception: " + e);
@@ -46,7 +46,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 		}
 		catch (IOException e) {
 			System.out.println("in exception: " + e);
@@ -59,7 +59,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 		}
 		catch (IOException e) {
 			System.out.println("in exception: " + e);
@@ -72,7 +72,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 		}
 		catch (IOException e) {
 			System.out.println("in exception: " + e);
@@ -85,7 +85,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 		}
 		catch (IOException e) {
 			System.out.println("in exception: " + e);
@@ -98,7 +98,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 		}
 		catch (IOException e) {
 			System.out.println("in exception: " + e);
@@ -112,7 +112,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
 		}
@@ -127,7 +127,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
 		}
@@ -142,7 +142,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
 		}
@@ -157,7 +157,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
 		}
@@ -172,7 +172,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
 		}
@@ -187,7 +187,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
 		}
@@ -202,7 +202,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
 		}
@@ -217,7 +217,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
 		}
@@ -265,7 +265,7 @@ public class Tests {
 		Map<String, Vector<String>> invIndex = null;
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			invIndex = d.importInverseIndexFromFile(INV_INDEX_FILE_PATH);
 			d.constructSharedWordGraph(invIndex);
 		}
@@ -281,7 +281,7 @@ public class Tests {
 		Map<String, Vector<String>> invIndex = null;
 
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			invIndex = d.importInverseIndexFromFile(INV_INDEX_FILE_PATH);
 			d.constructSharedWordGraph(invIndex);
 		}
@@ -297,7 +297,7 @@ public class Tests {
 		Map<String, Vector<String>> invIndex = null;
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			invIndex = d.importInverseIndexFromFile(INV_INDEX_FILE_PATH);
 			d.constructSharedWordGraph(invIndex);
 			d.annotateConnectedComponents();
@@ -314,7 +314,7 @@ public class Tests {
 		Map<String, Vector<String>> invIndex = null;
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			invIndex = d.importInverseIndexFromFile(INV_INDEX_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
@@ -333,7 +333,7 @@ public class Tests {
 		Map<String, Vector<String>> invIndex = null;
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			invIndex = d.importInverseIndexFromFile(INV_INDEX_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
@@ -352,7 +352,7 @@ public class Tests {
 		Map<String, Vector<String>> invIndex = null;
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			invIndex = d.importInverseIndexFromFile(INV_INDEX_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
@@ -371,7 +371,7 @@ public class Tests {
 		Map<String, Vector<String>> invIndex = null;
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			invIndex = d.importInverseIndexFromFile(INV_INDEX_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
@@ -391,7 +391,7 @@ public class Tests {
 		Map<String, Vector<String>> invIndex = null;
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			invIndex = d.importInverseIndexFromFile(INV_INDEX_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
@@ -411,7 +411,7 @@ public class Tests {
 		Map<String, Vector<String>> invIndex = null;
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			invIndex = d.importInverseIndexFromFile(INV_INDEX_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
@@ -433,7 +433,7 @@ public class Tests {
 		Map<String, Vector<String>> invIndex = null;
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			invIndex = d.importInverseIndexFromFile(INV_INDEX_FILE_PATH);
 			d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
 			d.predictTweetSentimentFromBasicWordlist();
@@ -456,7 +456,7 @@ public class Tests {
 		TweetCollection d = new TweetCollection();
 		
 		try {
-			d.ingestTweetsFromFile(SAMPLE_10_TWEET_CSV_FILE_PATH);
+			d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
 			d.importFinegrainedSentimentWordsFromFile(FINEGRAINED_SENT_FILE_PATH);
 			d.predictTweetSentimentFromFinegrainedWordlist(2, 1);
 		}

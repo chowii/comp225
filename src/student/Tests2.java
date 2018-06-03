@@ -199,7 +199,6 @@ public class Tests2 {
         }
         Tweet tweetByID = d.getTweetByID("2193602064");
         assertEquals(tweetByID.numNeighbours(), Integer.valueOf(4));
-        tweetByID.neighbourList.forEach(id -> System.out.println("testGraphConstruction: " + id));
     }
 
     @Test

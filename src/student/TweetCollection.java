@@ -15,10 +15,9 @@ import static student.Tests.BASIC_SENT_FILE_PATH;
 import static student.Tests.FINEGRAINED_SENT_FILE_PATH;
 
 
-public class TweetCollection {
+public class TweetCollection extends TreeMap<String, Tweet> {
 
     // TODO: add appropriate data types
-    TreeMap<String, Tweet> tweetIdToTweetMap;
     Map<String, Polarity> basicWordToPolarityMap = new HashMap<>();
     Map<String, FinegrainedSentiment> fineGrainedSentimentMap = new HashMap<>();
 
@@ -26,7 +25,6 @@ public class TweetCollection {
     public TweetCollection() {
         // Constructor
         // TODO
-        tweetIdToTweetMap = new TreeMap<>();
         try {
             importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
             importFinegrainedSentimentWordsFromFile(FINEGRAINED_SENT_FILE_PATH);
@@ -42,13 +40,13 @@ public class TweetCollection {
     public Tweet getTweetByID(String ID) {
         // PRE: -
         // POST: Returns the Tweet object that with tweet ID
-        return tweetIdToTweetMap.get(ID);
+        return get(ID);
     }
 
     public Integer numTweets() {
         // PRE: -
         // POST: Returns the number of tweets in this collection
-        return tweetIdToTweetMap.size();
+        return size();
     }
 
     /*
@@ -120,7 +118,7 @@ public class TweetCollection {
                         csvRecord.get(5));                // text
 
                 // TODO: insert tweet tw into appropriate data type
-                tweetIdToTweetMap.put(tw.getID(), tw);
+                put(tw.getID(), tw);
             }
         }
     }
@@ -210,7 +208,7 @@ public class TweetCollection {
 
         // TODO
 
-        tweetIdToTweetMap.forEach((id, tweet) -> {
+        forEach((id, tweet) -> {
             String[] tweetWordList = getWords(tweet.text);
             Integer count = null;
             Polarity p;
@@ -282,11 +280,10 @@ public class TweetCollection {
         for (String key : invIndex.keySet()) {
             Vector<String> idList = invIndex.get(key);
             idList.forEach((id) -> {
-                Tweet t = tweetIdToTweetMap.get(id);
+                Tweet t = get(id);
                 if (t != null) {
                     for (String wordIdList : idList) {
-                        if (!wordIdList.equals(id) && tweetIdToTweetMap.get(wordIdList) != null) {
-//                            System.out.println("word: " + key + " tweetId: " + id + " neighbourId: " + wordIdList);
+                        if (!wordIdList.equals(id) && get(wordIdList) != null) {
                             t.addNeighbour(wordIdList);
                         }
                     }
@@ -301,35 +298,10 @@ public class TweetCollection {
         // POST: Returns the number of connected components
 
         // TODO
-
-        Set<String> keySet = tweetIdToTweetMap.keySet();
-
-        int i = 0;
-
-        for (String key : keySet) {
-            i = i + getNeighbourListCount(keySet, tweetIdToTweetMap.get(key));
-        }
-//        tweetIdToTweetMap.forEach((id, tweet) -> {
-//            i = i+ getNeighbourListCount(tweet);
-//        });
-
         return annotatedComponentMap.size();
     }
 
-    public int getNeighbourListCount(Set<String> keySet, Tweet tweet) {
-        if (tweet.neighbourList.size() > 0) {
-            int count = 0;
-            for (String id : tweet.neighbourList) {
-                if (!id.equals(tweet.id)) {
-                    count++;
-                }
-            }
-            return 1 + count;
-        }
-        return 0;
-    }
-
-    Vector<String> annotatedComponentMap = new Vector<>();
+    Vector<Vector<String>> annotatedComponentMap = new Vector<>();
 
     public void annotateConnectedComponents() {
         // PRE: -
@@ -337,18 +309,32 @@ public class TweetCollection {
 
         // TODO
 
-
-        annotatedComponentMap = dft();
-
+        for (String s : keySet()) {
+            Vector<String> strings = new Vector<>();
+            Tweet tweet = getTweetByID(s);
+            if (!tweet.isVisited) {
+                tweet.isVisited = true;
+                bfs(strings, tweet);
+                annotatedComponentMap.add(strings);
+            }
+        }
     }
 
-    private Vector<String> dft() {
-
-
-        tweetIdToTweetMap
-
-
-        return null;
+    public void bfs(Vector<String> list, Tweet tweet) {
+        tweet.isVisited = true;
+        PriorityQueue<String> queue = new PriorityQueue<>();
+        if (!list.contains(tweet.id))
+            list.add(tweet.id);
+        tweet.neighbourList.forEach(nId -> {
+            if (!queue.contains(nId)) {
+                queue.add(nId);
+            }
+        });
+        while (queue.iterator().hasNext()) {
+            Tweet tweetByID = getTweetByID(queue.poll());
+            if (!tweetByID.isVisited)
+                bfs(list, tweetByID);
+        }
     }
 
 
@@ -394,8 +380,8 @@ public class TweetCollection {
 
         // TODO
         double numCorrect = 0, numPredicted = 0;
-        for (String key : tweetIdToTweetMap.keySet()) {
-            Tweet tweet = tweetIdToTweetMap.get(key);
+        for (String key : keySet()) {
+            Tweet tweet = get(key);
 
             if (tweet.predictedPolarity != NONE) {
                 numCorrect += tweet.predictedPolarity == tweet.goldPolarity ? 1 : 0;
@@ -411,24 +397,24 @@ public class TweetCollection {
 
         // TODO
         int count = 0;
-        for (String key : tweetIdToTweetMap.keySet()) {
-            Tweet tweet = tweetIdToTweetMap.get(key);
+        for (String key : keySet()) {
+            Tweet tweet = get(key);
             if (tweet.isTweetPredicted()) {
                 count++;
             }
         }
 
-        return (double) count / (double) tweetIdToTweetMap.size();
+        return (double) count / (double) size();
     }
 
 
     public static void main(String[] args) {
         TweetCollection tweetCollection = new TweetCollection();
         try {
-            tweetCollection.ingestTweetsFromFile(Tests.SAMPLE_10_TWEET_CSV_FILE_PATH);
+            tweetCollection.ingestTweetsFromFile(Tests.SAMPLE_CSV_FILE_PATH);
             tweetCollection.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
             Map<String, Vector<String>> i = tweetCollection.importInverseIndexFromFile(Tests.INV_INDEX_FILE_PATH);
-            tweetCollection.tweetIdToTweetMap.forEach((id, tweet) ->
+            tweetCollection.forEach((id, tweet) ->
                     tweet.dumpNeigbourList()
             );
 
