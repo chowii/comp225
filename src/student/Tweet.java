@@ -18,7 +18,7 @@ public class Tweet {
     // TODO: Add appropriate data types
     String polarityString, id, date, user, text;
     Polarity goldPolarity, predictedPolarity, annotatedPolarity;
-    Vector<String> neighbourList = new Vector<>();
+    Vector<String> neighbourList;
     boolean isVisited;
 
 
@@ -31,6 +31,7 @@ public class Tweet {
         text = t;
         predictedPolarity = Polarity.NONE;
         isVisited = false;
+        neighbourList = new Vector<>();
     }
 
     public Polarity getAnnotatedPolarity() {

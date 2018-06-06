@@ -324,7 +324,7 @@ public class Tests {
 		catch (IOException e) {
 			System.out.println("in exception: " + e);
 		}
-		assertEquals(d.componentSentLabelCount("1467811372", Polarity.POS), Integer.valueOf(1));
+		assertEquals(Integer.valueOf(1), d.componentSentLabelCount("1467811372", Polarity.POS));
 	}
 
 	@Test
@@ -343,7 +343,7 @@ public class Tests {
 		catch (IOException e) {
 			System.out.println("in exception: " + e);
 		}
-		assertEquals(d.componentSentLabelCount("1467811372", Polarity.NEG), Integer.valueOf(0));
+		assertEquals(Integer.valueOf(0), d.componentSentLabelCount("1467811372", Polarity.NEG));
 	}
 
 	@Test
@@ -423,8 +423,7 @@ public class Tests {
 		catch (IOException e) {
 			System.out.println("in exception: " + e);
 		}
-		assertFalse(true); // todo remove
-		assertEquals(d.getTweetByID("1467811184").getPredictedPolarity(), Polarity.POS);
+		assertEquals(Polarity.NEUT, d.getTweetByID("1467811184").getPredictedPolarity());
 	}
 
 	@Test
@@ -444,7 +443,7 @@ public class Tests {
 		catch (IOException e) {
 			System.out.println("in exception: " + e);
 		}
-		assertEquals(d.getTweetByID("1467811372").getPredictedPolarity(), Polarity.POS);
+		assertEquals(Polarity.POS, d.getTweetByID("1467811372").getPredictedPolarity());
 	}
 	/*
 	*/
@@ -463,7 +462,7 @@ public class Tests {
 		catch (IOException e) {
 			System.out.println("in exception: " + e);
 		}
-		assertEquals(d.getTweetByID("1467811594").getPredictedPolarity(), Polarity.NEG);
+		assertEquals(Polarity.NEG, d.getTweetByID("1467811594").getPredictedPolarity());
 	}
 
 	

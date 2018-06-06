@@ -18,13 +18,16 @@ import static student.Tests.FINEGRAINED_SENT_FILE_PATH;
 public class TweetCollection extends TreeMap<String, Tweet> {
 
     // TODO: add appropriate data types
-    Map<String, Polarity> basicWordToPolarityMap = new HashMap<>();
-    Map<String, FinegrainedSentiment> fineGrainedSentimentMap = new HashMap<>();
-
+    Map<String, Polarity> basicWordToPolarityMap;
+    Map<String, FinegrainedSentiment> fineGrainedSentimentMap;
+    Vector<Vector<String>> annotatedComponentVector;
 
     public TweetCollection() {
         // Constructor
         // TODO
+        annotatedComponentVector = new Vector<>();
+        fineGrainedSentimentMap = new HashMap<>();
+        basicWordToPolarityMap = new HashMap<>();
         try {
             importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
             importFinegrainedSentimentWordsFromFile(FINEGRAINED_SENT_FILE_PATH);
@@ -237,6 +240,37 @@ public class TweetCollection extends TreeMap<String, Tweet> {
         //         based on count of sentiment words in sentWords
 
         // TODO
+        forEach((id, tweet) -> {
+            String[] wordList = tweet.getWords();
+            Integer count = null;
+            Polarity p;
+            Strength s;
+            for (String word : wordList) {
+                FinegrainedSentiment f = fineGrainedSentimentMap.get(word);
+                if (f != null) {
+                    p = f.polarity;
+                    s = f.strength;
+                    if (count == null) count = 0;
+                    switch (p) {
+                        case POS:
+                            if (s == Strength.STRONG) {
+                                count += strongWeight;
+                            } else {
+                                count += weakWeight;
+                            }
+                            break;
+                        case NEG:
+                            if (s == Strength.STRONG) {
+                                count -= strongWeight;
+                            } else {
+                                count -= weakWeight;
+                            }
+                            break;
+                    }
+                }
+            }
+            tweet.setPredictedPolarity(count == null ? NONE : count > 0 ? POS : count == 0 ? NEUT : NEG);
+        });
     }
 
     /*
@@ -298,10 +332,9 @@ public class TweetCollection extends TreeMap<String, Tweet> {
         // POST: Returns the number of connected components
 
         // TODO
-        return annotatedComponentMap.size();
+        return annotatedComponentVector.size();
     }
 
-    Vector<Vector<String>> annotatedComponentMap = new Vector<>();
 
     public void annotateConnectedComponents() {
         // PRE: -
@@ -314,13 +347,13 @@ public class TweetCollection extends TreeMap<String, Tweet> {
             Tweet tweet = getTweetByID(s);
             if (!tweet.isVisited) {
                 tweet.isVisited = true;
-                bfs(strings, tweet);
-                annotatedComponentMap.add(strings);
+                dft(strings, tweet);
+                annotatedComponentVector.add(strings);
             }
         }
     }
 
-    public void bfs(Vector<String> list, Tweet tweet) {
+    public void dft(Vector<String> list, Tweet tweet) {
         tweet.isVisited = true;
         PriorityQueue<String> queue = new PriorityQueue<>();
         if (!list.contains(tweet.id))
@@ -333,7 +366,7 @@ public class TweetCollection extends TreeMap<String, Tweet> {
         while (queue.iterator().hasNext()) {
             Tweet tweetByID = getTweetByID(queue.poll());
             if (!tweetByID.isVisited)
-                bfs(list, tweetByID);
+                dft(list, tweetByID);
         }
     }
 
@@ -343,17 +376,44 @@ public class TweetCollection extends TreeMap<String, Tweet> {
         // POST: Returns count of labels corresponding to Polarity p in component containing ID
 
         // TODO
+        Integer count = 0;
+        for (Vector<String> v : annotatedComponentVector) {
+            if (v.contains(ID)){
+                for (String id : v) {
+//                    if (id.equals(ID)) {
+                        if (p == get(id).getPredictedPolarity()) {
+                            count++;
+//                        }
+                    }
+                }
+            }
+        }
 
-        return null;
+        return count;
     }
 
 
     public void propagateLabelAcrossComponent(String ID, Polarity p, Boolean keepPred) {
         // PRE: ID is a tweet id in the graph
-        // POST: Labels tweets in component with predicted goldPolarity p
-        //         (if keepPred == T, only tweets w pred goldPolarity None; otherwise all tweets
+        // POST: Labels tweets in component with predicted polarity p
+        //         (if keepPred == T, only tweets w pred polarity None; otherwise all tweets
 
         // TODO
+        for (Vector<String> tId : annotatedComponentVector) {
+            if (tId.contains(ID)) {
+                for (String id : tId) {
+                    Tweet tweet = get(id);
+                    if (keepPred) {
+                        if (tweet.predictedPolarity == NONE) {
+                            tweet.predictedPolarity = p;
+                        }
+                    } else {
+                        tweet.predictedPolarity = p;
+                    }
+
+                }
+            }
+        }
     }
 
     public void propagateMajorityLabelAcrossComponents(Boolean keepPred) {
@@ -362,10 +422,29 @@ public class TweetCollection extends TreeMap<String, Tweet> {
         //       Majority label is defined as whichever of POS or NEG has the larger count;
         //         if POS and NEG are both zero, majority label is NONE
         //         otherwise, majority label is NEUT
-        //       If keepPred is True, all tweets in the component are labelled in this way
-        //         otherwise, only tweets with predicted label None are labelled in this way
+        //       If keepPred is True, only tweets with predicted label None are labelled in this way
+        //         otherwise, all tweets in the component are labelled in this way
 
         // TODO
+        for (Vector<String> tId : annotatedComponentVector) {
+            int posCount = 0, negCount = 0;
+            for (String id : tId) {
+                Polarity predictedPolarity = get(id).predictedPolarity;
+                if (predictedPolarity == POS)
+                    posCount++;
+                else if (predictedPolarity == NEG)
+                    negCount++;
+            }
+            if (posCount > negCount)
+                propagateLabelAcrossComponent(tId.get(0), POS, keepPred);
+            else if (negCount > posCount)
+                propagateLabelAcrossComponent(tId.get(0), NEG, keepPred);
+            else if (posCount == 0 && negCount == 0)
+                propagateLabelAcrossComponent(tId.get(0), NONE, keepPred);
+            else
+                propagateLabelAcrossComponent(tId.get(0), NEUT, keepPred);
+
+        }
     }
 
 
@@ -424,4 +503,8 @@ public class TweetCollection extends TreeMap<String, Tweet> {
 
     }
 
+    public void myTweetSentimentPredictor() {
+        predictTweetSentimentFromFinegrainedWordlist(2, 1);
+        System.out.println("myTweetSentimentPredictor: " + accuracy());
+    }
 }

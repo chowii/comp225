@@ -325,7 +325,7 @@ public class Tests2 {
         } catch (IOException e) {
             System.out.println("in exception: " + e);
         }
-        assertFalse(true); // todo remove
+//        assertFalse(true); // todo remove
         assertEquals(Polarity.POS, d.getTweetByID("2193602129").getPredictedPolarity());
     }
 
@@ -369,16 +369,19 @@ public class Tests2 {
     @Test
     public void testMyTweetSentimentPredictor() {
         TweetCollection d = new TweetCollection();
+        Map<String, Vector<String>> invIndex = null;
 
         try {
             d.ingestTweetsFromFile(SAMPLE_CSV_FILE_PATH);
             d.importBasicSentimentWordsFromFile(BASIC_SENT_FILE_PATH);
             d.importFinegrainedSentimentWordsFromFile(FINEGRAINED_SENT_FILE_PATH);
-            //d.myTweetSentimentPredictor();
-        } catch (IOException e) {
+            invIndex = d.importInverseIndexFromFile(INV_INDEX_FILE_PATH);
+            d.constructSharedWordGraph(invIndex);
+            d.myTweetSentimentPredictor();
+        }
+        catch (IOException e) {
             System.out.println("in exception: " + e);
         }
-        assertFalse(true); //todo remove
     }
 
 }
